@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:task_2023/core/model/hive_post.dart';
 import 'package:task_2023/core/router/router.dart';
+import 'core/data/network/dio/networking.dart';
 import 'feature/pages/home/home.dart';
 
 void main() async {
@@ -13,6 +16,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(HivePostAdapter());
   await Hive.openBox<HivePost>('hive_post');
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const ProviderScope(child: MyApp()));
 }
 
